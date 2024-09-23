@@ -1,5 +1,5 @@
-// import {page} from "./fields/fields";
-const {myworld} = require('./src/fields/fields');
+// import {page} from "./models/models";
+const {myworld} = require('./models/grid');
 
 const myWS = require('ws') ;
 
