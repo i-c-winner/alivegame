@@ -1,4 +1,4 @@
-// import {world} from "./fields/fields";
+// import {page} from "./fields/fields";
 const {myworld} = require('./src/fields/fields');
 
 const myWS = require('ws') ;
@@ -36,5 +36,5 @@ wss.on('connection', (wss: any) => {
   });
 });
 
-// console.log(world)
+// console.log(page)
 console.log('myWS сервер запущен на порту 8080');
