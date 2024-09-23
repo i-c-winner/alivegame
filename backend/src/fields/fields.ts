@@ -1,5 +1,5 @@
 const dimension = 200
-type TSmell = 0.05 | 0.15 | 0.25 | 0.35 | 0.45 |0.5 | 0.65 | 0.8
+type TSmell = number
 type TField = {
     position: {
         x: number,
