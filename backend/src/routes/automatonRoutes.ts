@@ -1,10 +1,11 @@
 import { Router } from "express";
-import { getGrid, updateAutomaton, reset } from "../controllers/automatonController";
+import { setSize, updateAutomaton, createGrid } from "../controllers/automatonController";
 
 const router = Router();
 
-router.get("/grid", getGrid);
+router.post("/setSize", setSize);
 router.post("/update", updateAutomaton);
-router.get('/reset', reset)
+router.post("/create", createGrid);
+
 
 export default router;

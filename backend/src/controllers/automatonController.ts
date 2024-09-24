@@ -1,25 +1,18 @@
 import { Request, Response } from "express";
 import { AutomatonService } from "../services/automatonService";
 
-const automatonService = {
-  instance: new AutomatonService(90, 190),
-  update: ()=>{
-    console.log("update automaton controller");
-    // @ts-ignore
-    this.instance=new AutomatonService(90, 190);
-  }
-}; // Размер сетки 20x20
+const automatonService =new AutomatonService() // Размер сетки 20x20
+export const createGrid=(req: Request, res: Response) => {
+  automatonService.create()
+  res.json(automatonService.getGrid())
+}
 
-export const getGrid = (req: Request, res: Response) => {
-  console.log('getGrid')
-  res.json(automatonService.instance.getGrid());
+export const setSize = (req: Request, res: Response) => {
+  automatonService.setSeizing(req.body.width, req.body.height)
+  res.json(true);
 };
 
 export const updateAutomaton = (req: Request, res: Response) => {
-  automatonService.instance.applyRules();
-  res.json(automatonService.instance.getGrid());
+  automatonService.applyRules();
+  res.json(automatonService.getGrid());
 };
-export const reset =(req: Request, res: Response) => {
-  automatonService.instance.reset()
-  res.json(automatonService.instance.getGrid());
-}

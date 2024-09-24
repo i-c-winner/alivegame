@@ -2,20 +2,32 @@ import {Grid} from "../models/grid";
 
 export class AutomatonService {
     grid: Grid;
+    private seizing: { x: number; y: number };
 
-    constructor(width: number, height: number) {
-        this.grid = new Grid(width, height);
+    constructor() {
+        this.applyRules=this.applyRules.bind(this);
     }
 
-    reset() {
-        this.grid = new Grid(this.grid.width, this.grid.height);
+    create() {
+        this.grid = new Grid() ;
+        this.grid.setSizing(this.seizing.x, this.seizing.y);
+        this.grid.create()
+    }
+    setSeizing(x: number, y: number) {
+        this.seizing={
+            x,
+            y
+        }
     }
 
     public applyRules() {
-        const newGrid = new Grid(this.grid.width, this.grid.height);
+        const newGrid = new Grid();
+        newGrid.setSizing(this.seizing.x, this.seizing.y)
+        newGrid.create()
 
-        for (let y = 0; y < this.grid.height; y++) {
-            for (let x = 0; x < this.grid.width; x++) {
+
+        for (let y = 0; y < this.seizing.y; y++) {
+            for (let x = 0; x < this.seizing.x; x++) {
                 const aliveNeighbors = this.countAliveNeighbors(x, y);
                 const cell = this.grid.grid[y][x];
 
@@ -42,7 +54,7 @@ export class AutomatonService {
         return directions.reduce((count, [dx, dy]) => {
             const nx = x + dx;
             const ny = y + dy;
-            if (nx >= 0 && nx < this.grid.width && ny >= 0 && ny < this.grid.height) {
+            if (nx >= 0 && nx < this.seizing.x && ny >= 0 && ny < this.seizing.y) {
                 count += this.grid.grid[ny][nx].alive ? 1 : 0;
             }
             return count;

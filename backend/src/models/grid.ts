@@ -5,16 +5,25 @@ export interface Cell {
 export class Grid {
     grid: Cell[][];
     private cells: number;
+    private seizing: { x: number; y: number };
 
-    constructor(public width: number, public height: number) {
+    constructor() {
+        this.initializeGrid=this.initializeGrid.bind(this);
+    }
+    create() {
         this.grid = this.initializeGrid();
-        this.cells=0
+    }
+    setSizing(x: number, y: number) {
+        this.seizing={
+            x,
+            y
+        }
     }
 
     private initializeGrid(): Cell[][] {
-
-        return Array.from({ length: this.height }, () =>
-            Array.from({ length: this.width }, () => {
+        console.log(this)
+        return Array.from({ length: this.seizing.y }, () =>
+            Array.from({ length: this.seizing.x }, () => {
                    return ({ alive: Math.random() > 0.5 })
             })
         );
@@ -22,7 +31,7 @@ export class Grid {
 
     public updateCell(x: number, y: number, alive: boolean) {
 
-        if (x >= 0 && x < this.width && y >= 0 && y < this.height) {
+        if (x >= 0 && x < this.seizing.x && y >= 0 && y < this.seizing.y) {
             this.grid[y][x].alive = alive;
         }
     }
