@@ -5,13 +5,13 @@ import {useEffect, useRef} from "react";
 
 function World(){
     const refNode=useRef<HTMLDivElement>(null)
-    useEffect(() => {
-        const app = new Application();
+    const app = new Application();
+    function start() {
         app.init({ background: '#1099bb', resizeTo: window}).then(async () => {
             refNode.current!.appendChild(app.canvas)
             const antTexture = await Assets.load('/images/ant.png');
-           const ant= new Sprite(antTexture);
-           ant.width=200
+            const ant= new Sprite(antTexture);
+            ant.width=200
             ant.height=200
             app.stage.addChild(ant);
             // Center the sprite's anchor point.
@@ -34,8 +34,10 @@ function World(){
                 ant2.y = y;
                 y+=2
             },20)
-
         });
+        }
+    useEffect(() => {
+
     }, []);
     return <div ref={refNode}>
 world
