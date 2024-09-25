@@ -3,9 +3,9 @@ import { setSize, updateAutomaton, createGrid } from "../controllers/automatonCo
 
 const router = Router();
 
-router.post("/setSize", setSize);
+router.post("/setsize", setSize);
 router.post("/update", updateAutomaton);
-router.post("/create", createGrid);
+router.get("/create", createGrid);
 
 
 export default router;

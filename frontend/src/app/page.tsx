@@ -1,82 +1,75 @@
 'use client'
-import {useEffect, useRef} from "react";
+import React, {useEffect} from "react";
+import {useCtx} from "@/app/layout";
+import {useRef} from "react";
+import {useRouter} from "next/navigation";
+
 
 export default function Home() {
-    const refDiv = useRef(null);
-    // @ts-ignore
-    function update(res) {
-        res.forEach((row: [], indexI: number) => {
-            row.forEach((cell: { alive: boolean }, indexY) => {
-                if (cell.alive) {
-                    console.log(indexI, indexY, cell)
-                    const node = document.createElement("div")
-                    node.style.position = 'absolute';
-                    node.style.width = '10px';
-                    node.style.height = '10px';
-                    node.style.background = 'white';
-                    node.style.top = `${(indexY * 10) - 5}px`;
-                    node.style.left = `${(indexI * 10) - 5}px`;
-                    // @ts-ignore
-                    const container=document.getElementById('container');
-                    container!.appendChild(node)
+    const [startActive, setStartActive] = React.useState<boolean>(false);
+    const {size, setSize} = useCtx()
+    const router = useRouter();
+    const refWidth = useRef<HTMLInputElement>(null)
+    const refHeight = useRef<HTMLInputElement>(null)
 
-                }
-            })
-        })
-    }
-function start() {
-         // @ts-ignore
-    refDiv.current!.innerHTML= '';
-    fetch('http://localhost:4000/api/grid').then(res => (res.json())).then((res) => {
-update(res)
-    })
-}
 
-function interval() {
-        setInterval(() => {
-            fetch('http://localhost:4000/api/update', {
-                method: 'POST',
-            }).then(res => res.json()).then((res) => {
-                // @ts-ignore
-                refDiv.current!.innerHTML= '';
-                update(res)
-            })
-        }, 100)
-    }
-    function one() {
-        fetch('http://localhost:4000/api/update', {
+    function submitButton(event: React.FormEvent<HTMLFormElement>) {
+        event?.preventDefault()
+        console.log(refWidth.current,'curren')
+        if (refWidth.current?.value && refHeight.current?.value) {
+            const size = {
+                width: Number(refWidth.current.value),
+                height: Number(refHeight.current.value)
+            }
+            setSize(size)
+        }
+        fetch('http://localhost:4000/api/setsize/', {
             method: 'POST',
-        }).then(res => res.json()).then((res) => {
-            // @ts-ignore
-            refDiv.current!.innerHTML= '';
-            update(res)
+            headers: {
+                'Content-Type': 'application/json',
+            },
+
+            body: JSON.stringify({
+                size
+            })
+        }).then(res => res.json()).then((created)=>{
+            if (created) {
+                console.log(created)
+                if (created){
+                    setStartActive(true);
+                } else {
+                    setStartActive(false);
+                }
+            }
         })
     }
-    function reset() {
-        // @ts-ignore
-        refDiv.current!.innerHTML= '';
-        fetch('http://localhost:4000/api/reset').then(res => (res.json())).then((res) => {
-            update(res)
+
+    function start() {
+        fetch('http://localhost:4000/api/create/').then(res => res.json()).then((response)=>{
+            console.log(response)
+            if (response.status) {
+                router.push(`/grid`)
+            }
+
         })
+
     }
+
     useEffect(() => {
-        // fetch('http://localhost:4000/api/update', {
-        //     method: 'POST',
-        // }).then(res => res.json()).then((res) => {
-        //     // @ts-ignore
-        //     refDiv.current!.innerHTML= ''
-        //     // update(res)
-        // })
-
-    }, []);
-
+        console.log(size, 'change ')
+    }, [size])
     return (
-        <div className="cont">
-            <button onClick={start}>/Start/</button>
-            <button onClick={one}>/ one /</button>
-            <button onClick={interval}>interval</button>
-            <button onClick={reset}> / reset</button>
-            <div ref={refDiv} className={'container'} id="container"></div>
+        <div className="main">
+            <form onSubmit={submitButton}>
+                <input id="width" ref={refWidth}/>{size.width}
+                <label key="width">Задайте ширину</label>
+                <input id="height" ref={refHeight}/>
+                <label key="widht">Задайте высоту</label>
+                <button type="submit">Создайте поле</button>
+            </form>
+            <button disabled={!startActive} onClick={start}>start</button>
         </div>
     )
 }
+
+

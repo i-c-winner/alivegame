@@ -4,11 +4,17 @@ import { AutomatonService } from "../services/automatonService";
 const automatonService =new AutomatonService() // Размер сетки 20x20
 export const createGrid=(req: Request, res: Response) => {
   automatonService.create()
-  res.json(automatonService.getGrid())
+  res.json({
+    status: true,
+    grid: automatonService.getGrid()
+  })
 }
 
 export const setSize = (req: Request, res: Response) => {
-  automatonService.setSeizing(req.body.width, req.body.height)
+  console.log(req.body)
+  const {width, height} = req.body.size
+  console.log(width, height)
+  automatonService.setSeizing(width, height)
   res.json(true);
 };
 
