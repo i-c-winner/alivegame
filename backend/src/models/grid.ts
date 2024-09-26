@@ -21,7 +21,6 @@ export class Grid {
     }
 
     private initializeGrid(): Cell[][] {
-        console.log(this)
         return Array.from({ length: this.seizing.y }, () =>
             Array.from({ length: this.seizing.x }, () => {
                    return ({ alive: Math.random() > 0.5 })

@@ -1,0 +1,18 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+}
+.row {
+    display: flex;
+
+}
+
+.cell{
+    background-color: black;
+    width: 10px;
+    height: 10px;
+
+}
+.cell_alive {
+    background-color: white;
+}

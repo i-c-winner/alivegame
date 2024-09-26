@@ -11,9 +11,7 @@ export const createGrid=(req: Request, res: Response) => {
 }
 
 export const setSize = (req: Request, res: Response) => {
-  console.log(req.body)
   const {width, height} = req.body.size
-  console.log(width, height)
   automatonService.setSeizing(width, height)
   res.json(true);
 };

@@ -30,17 +30,44 @@ body {
   position: relative;
 }
 
+.form {
+  display: flex;
+  flex-direction: column;
+  margin: 150px auto;
+  height: 250px;
+  justify-content: space-between;
+  width: 350px;
+  padding: 20px;
+  background: #d71d1d;
+  border-radius: 5px;
+  border: 3px solid #31d21f;
+  align-items: center;
+}
+.input {
+  background: white;
+  color: black;
+}
+.btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px auto;
+  padding: 20px;
+  background: #d71d1d;
+  border-radius: 5px;
+  border: 3px solid #31d21f;
+  width: 350px
 
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(190, 1fr); /* 190 колонок одинакового размера */
-    grid-template-rows: repeat(90, 1fr); /* 90 строк одинакового размера */
-    gap: 2px; /* Зазор между элементами, если нужно */
-    width: 100vw; /* Ширина контейнера */
-    height: 100vh; /* Высота контейнера на всю высоту экрана */
+}
 
-  }
-
-  .cell{
-    background-color: white;
-  }
+.btn {
+  width: 75%;
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+}
+.btn:disabled {
+  background: grey;
+}

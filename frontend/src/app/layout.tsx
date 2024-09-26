@@ -4,18 +4,24 @@ import localFont from "next/font/local";
 import "./globals.css";
 import {createContext, Dispatch, SetStateAction, useContext} from "react";
 import React from "react";
+
+type TGrid={alive: boolean}[][]
 const MyContext = createContext<{
     size: {
         width: number;
         height: number;
     },
         setSize: Dispatch<SetStateAction<{     width: number;     height: number; }>>;
+    grid: TGrid;
+    setGrid: Dispatch<SetStateAction<TGrid>>
 }>({
     size: {
         width: 190,
         height: 90
     },
-    setSize: ()=>{}
+    setSize: ()=>{},
+    grid: [],
+    setGrid: ()=>{}
 })
 
 
@@ -44,12 +50,13 @@ export default function RootLayout({
         width: 190,
         height: 90
     });
+    const [grid, setGrid] = React.useState([[{alive: false}]]);
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-      <MyContext.Provider value={{size, setSize}}>
+      <MyContext.Provider value={{size, setSize, grid, setGrid}}>
         {children}
       </MyContext.Provider>
 

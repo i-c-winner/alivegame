@@ -4,7 +4,7 @@ import { setSize, updateAutomaton, createGrid } from "../controllers/automatonCo
 const router = Router();
 
 router.post("/setsize", setSize);
-router.post("/update", updateAutomaton);
+router.get("/update", updateAutomaton);
 router.get("/create", createGrid);
 
 

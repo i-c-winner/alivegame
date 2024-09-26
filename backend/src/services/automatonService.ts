@@ -24,8 +24,6 @@ export class AutomatonService {
         const newGrid = new Grid();
         newGrid.setSizing(this.seizing.x, this.seizing.y)
         newGrid.create()
-
-
         for (let y = 0; y < this.seizing.y; y++) {
             for (let x = 0; x < this.seizing.x; x++) {
                 const aliveNeighbors = this.countAliveNeighbors(x, y);
