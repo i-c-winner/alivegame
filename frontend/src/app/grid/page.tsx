@@ -15,13 +15,15 @@ function Page() {
         height: `${size.height * 10}px`
     }
     useEffect(() => {
-        setInterval(()=>{
+        const intervalStep=setInterval(()=>{
             fetch('http://localhost:4000/api/update/').then(res => res.json() as Promise<{alive: boolean}[][]>)
                 .then((response: { alive: boolean}[][] )=>{
                         setSource(response)
-
                 })
         }, 200)
+        return ()=> {
+            clearInterval(intervalStep)
+        }
     }, [grid]);
         return (
         <div style={style} className="grid">
